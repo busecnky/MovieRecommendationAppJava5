@@ -14,6 +14,7 @@ import com.busecnky.repository.IAuthRepository;
 import com.busecnky.repository.entity.Auth;
 import com.busecnky.repository.enums.EStatus;
 import com.busecnky.utility.CodeGenerator;
+import com.busecnky.utility.JwtTokenManager;
 import com.busecnky.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,12 @@ import java.util.Optional;
 public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
     private final IUserManager userManager;
-    public AuthService(IAuthRepository authRepository, IUserManager userManager) {
+    private final JwtTokenManager jwtTokenManager;
+    public AuthService(IAuthRepository authRepository, IUserManager userManager, JwtTokenManager jwtTokenManager) {
         super(authRepository);
         this.authRepository = authRepository;
         this.userManager = userManager;
+        this.jwtTokenManager = jwtTokenManager;
     }
 
 
@@ -50,7 +53,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         }
         if (dto.getActivationCode().equals(auth.get().getActivationCode())){
             auth.get().setStatus(EStatus.ACTIVE);
-            save(auth.get());
+            update(auth.get());
             userManager.activateStatus(dto.getId());
             return  true;
         }else{
@@ -61,7 +64,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
     public Boolean activateStatus2(ActivateRequestDto dto) {
         Optional<Auth> auth=findById(dto.getId());
         if (auth.isEmpty()){
-            throw  new AuthManagerException(EErrorType.USER_NOT_FOUND);
+            throw new AuthManagerException(EErrorType.USER_NOT_FOUND);
         }
         if (dto.getActivationCode().equals(auth.get().getActivationCode())){
             auth.get().setStatus(EStatus.ACTIVE);
@@ -73,7 +76,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         }
     }
 
-    public LoginResponseDto login(LoginRequestDto dto) {
+    public String login(LoginRequestDto dto) {
         Optional<Auth> auth=authRepository.findOptionalByUsernameAndPassword(dto.getUsername(), dto.getPassword());
         if (auth.isEmpty()){
             throw  new AuthManagerException(EErrorType.LOGIN_ERROR);
@@ -81,8 +84,12 @@ public class AuthService extends ServiceManager<Auth,Long> {
         if(!auth.get().getStatus().equals(EStatus.ACTIVE)){
             throw  new AuthManagerException(EErrorType.LOGIN_STATUS_ERROR);
         }
-        return IAuthMapper.INSTANCE.toLoginResponseDto(auth.get());
 
+        Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+        if (token.isEmpty()){
+            throw new AuthManagerException(EErrorType.TOKEN_NOT_CREATED);
+        }
+        return token.get();
     }
 
     public Boolean updateByUsernaemOrEmail(UpdateByEmailOrUserNameRequestDto dto) {

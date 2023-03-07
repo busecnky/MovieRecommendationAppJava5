@@ -21,7 +21,8 @@ public enum EErrorType {
     USERNAME_DUPLICATE(4112,"Böyle bir kullanıcı adı var",HttpStatus.BAD_REQUEST),
     ACTIVATE_CODE_ERROR(4113,"Aktivasyon kod hatası",HttpStatus.BAD_REQUEST),
     LOGIN_ERROR(4114,"Kullanici adi veya sifre hatali",HttpStatus.BAD_REQUEST),
-    LOGIN_STATUS_ERROR(4114,"Yetkisiz kullanici girisi",HttpStatus.BAD_REQUEST);
+    LOGIN_STATUS_ERROR(4114,"Yetkisiz kullanici girisi",HttpStatus.BAD_REQUEST),
+    TOKEN_NOT_CREATED(4116,"Token oluşturulamadı", HttpStatus.BAD_REQUEST);
 
     private   int code;
     private   String message;

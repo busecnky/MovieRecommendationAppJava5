@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.Optional;
 
 public class JwtTokenManager {
-    @Value("${jwt.secretKey}")
+    @Value("${SECRETKEY}")
     String secretKey;
     @Value("${AUDIENCE}")
     String audience;
-    @Value("${jwt.issuer}")
+    @Value("${ISSUER}")
     String issuer;
 
     public Optional<String> createToken(Long id){
@@ -59,23 +59,7 @@ public class JwtTokenManager {
         }
     }
 
-    public Boolean validateToken(String token) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC512(secretKey);
-            JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
-            DecodedJWT decodedJWT = verifier.verify(token);
-            if (decodedJWT == null) {
-                return false;
-            }
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-            return false;
-        }
-        return true;
-    }
-
-
-    public Optional<Long> getIdFromToken(String token) {
+    public Optional<DecodedJWT> validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC512(secretKey);
             JWTVerifier verifier = JWT.require(algorithm).withIssuer(issuer).withAudience(audience).build();
@@ -83,11 +67,21 @@ public class JwtTokenManager {
             if (decodedJWT == null) {
                 return Optional.empty();
             }
-            return Optional.of(decodedJWT.getClaim("id").asLong());
+            return Optional.of(decodedJWT);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
             return Optional.empty();
         }
+
+    }
+
+
+    public Optional<Long> getIdFromToken(String token) {
+            Optional<DecodedJWT> decodedJWT = validateToken(token);
+            if (decodedJWT.isPresent()) {
+                return Optional.of(decodedJWT.get().getClaim("id").asLong());
+            }
+            return Optional.empty();
     }
 
     public Optional<String> getRoleFromToken(String token) {

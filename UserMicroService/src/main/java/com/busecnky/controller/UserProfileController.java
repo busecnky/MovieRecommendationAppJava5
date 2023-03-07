@@ -27,9 +27,9 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfileService.update(dto));
     }
 
-    @PostMapping(ACTIVATESTATUS+"/{authid}")
-    public ResponseEntity<Boolean> activateStatus(@PathVariable Long authid){
-        return ResponseEntity.ok(userProfileService.activateStatus(authid));
+    @PostMapping(ACTIVATESTATUS+"/{authId}")
+    public ResponseEntity<Boolean> activateStatus(@PathVariable Long authId){
+        return ResponseEntity.ok(userProfileService.activateStatus(authId));
 
         //....activateStatus?=authid=1   yazıyorduk bu RequestParam
         //....activateStatus/1   yazabiliyoruz PathVariable ile
@@ -37,8 +37,8 @@ public class UserProfileController {
     }
 
     @PostMapping(ACTIVATESTATUS)
-    public ResponseEntity<Boolean> activateStatus2(@RequestParam Long authid){
-        return ResponseEntity.ok(userProfileService.activateStatus(authid));
+    public ResponseEntity<Boolean> activateStatus2(@RequestParam Long authId){
+        return ResponseEntity.ok(userProfileService.activateStatus(authId));
 
         //....activateStatus?=authid=1   yazıyorduk bu RequestParam
         //....activateStatus/1   yazabiliyoruz PathVariable ile
