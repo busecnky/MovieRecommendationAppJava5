@@ -1,0 +1,36 @@
+ext{
+    versions = [
+            springBoot                 : "2.7.9",
+            springCloud                : "3.1.5",
+            postgreSql                 : "42.5.3",
+            lombok                     : "1.18.26",
+            mapstruct                  : "1.5.3.Final",
+            swaggerui                  : "1.6.14",
+            jwt                        : "4.3.0",
+
+
+    ]
+    libs = [
+            //Spring Boot Starter
+            springBootStarterWeb           : "org.springframework.boot:spring-boot-starter-web:$versions.springBoot",
+            springBootStarterDataJpa       : "org.springframework.boot:spring-boot-starter-data-jpa:$versions.springBoot",
+            springBootStarterValidation    : "org.springframework.boot:spring-boot-starter-validation:$versions.springBoot",
+            //Spring Cloud
+            springCloudOpenFeign           : "org.springframework.cloud:spring-cloud-starter-openfeign:$versions.springCloud",
+            springCloudConfig              : "org.springframework.cloud:spring-cloud-starter-config:$versions.springCloud",
+            springCloudConfigClient        : "org.springframework.cloud:spring-cloud-config-client:$versions.springCloud",
+            springCloudConfigServer        : "org.springframework.cloud:spring-cloud-config-server:$versions.springCloud",
+
+            //Database
+            postgreSql                     : "org.postgresql:postgresql:$versions.postgreSql" ,
+            //Diğer bağımlıklıklar
+            lombok                         : "org.projectlombok:lombok:$versions.lombok" ,
+            mapstruct                      : "org.mapstruct:mapstruct:$versions.mapstruct" ,
+            mapstructProcessor             : "org.mapstruct:mapstruct-processor:$versions.mapstruct" ,
+            swaggerui                      : "org.springdoc:springdoc-openapi-ui:$versions.swaggerui" ,
+            //Güvenlik
+            jwt                            : "com.auth0:java-jwt:$versions.jwt",
+
+
+    ]
+}
