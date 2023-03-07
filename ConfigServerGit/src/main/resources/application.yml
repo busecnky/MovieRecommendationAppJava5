@@ -1,0 +1,14 @@
+server:
+  port: 8889
+spring:
+  application:
+    name: config-server-git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/busecnky/OglenConfigServer.git"
+          default-label: main
+          skip-ssl-validation: true
+          username: busecnky
+          password: ${GIT_PASSWORD}

@@ -4,7 +4,6 @@ import com.busecnky.dto.request.ActivateRequestDto;
 import com.busecnky.dto.request.LoginRequestDto;
 import com.busecnky.dto.request.RegisterRequestDto;
 import com.busecnky.dto.request.UpdateByEmailOrUserNameRequestDto;
-import com.busecnky.dto.response.LoginResponseDto;
 import com.busecnky.dto.response.RegisterResponseDto;
 import com.busecnky.exception.AuthManagerException;
 import com.busecnky.exception.EErrorType;
@@ -18,6 +17,7 @@ import com.busecnky.utility.JwtTokenManager;
 import com.busecnky.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -32,7 +32,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
         this.jwtTokenManager = jwtTokenManager;
     }
 
-
+    @Transactional
     public RegisterResponseDto register(RegisterRequestDto dto) {
         try {
             Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
@@ -85,7 +85,7 @@ public class AuthService extends ServiceManager<Auth,Long> {
             throw  new AuthManagerException(EErrorType.LOGIN_STATUS_ERROR);
         }
 
-        Optional<String> token = jwtTokenManager.createToken(auth.get().getId());
+        Optional<String >token = jwtTokenManager.createToken(auth.get().getId(),auth.get().getRole());
         if (token.isEmpty()){
             throw new AuthManagerException(EErrorType.TOKEN_NOT_CREATED);
         }

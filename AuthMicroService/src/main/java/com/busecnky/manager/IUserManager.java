@@ -17,9 +17,9 @@ public interface IUserManager {
     @PostMapping("/create")
     public ResponseEntity<Boolean> createUser(@RequestBody NewCreateUserRequestDto dto);
 
-    @PostMapping(ACTIVATESTATUS+"/{authId}")
-    public ResponseEntity<Boolean> activateStatus(@PathVariable Long authId);
+    @PostMapping(ACTIVATESTATUS+"/{authid}")
+    public ResponseEntity<Boolean> activateStatus(@PathVariable (name = "authid")Long authid);
 
     @PostMapping(ACTIVATESTATUS)
-    public ResponseEntity<Boolean> activateStatus2(@RequestParam Long authId);
+    public ResponseEntity<Boolean> activateStatus2(@RequestParam (name = "authid")Long authid);
 }

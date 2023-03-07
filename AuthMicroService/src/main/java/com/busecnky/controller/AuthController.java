@@ -4,12 +4,11 @@ import com.busecnky.dto.request.ActivateRequestDto;
 import com.busecnky.dto.request.LoginRequestDto;
 import com.busecnky.dto.request.RegisterRequestDto;
 import com.busecnky.dto.request.UpdateByEmailOrUserNameRequestDto;
-import com.busecnky.dto.response.LoginResponseDto;
 import com.busecnky.dto.response.RegisterResponseDto;
 import com.busecnky.service.AuthService;
+import com.busecnky.utility.JwtTokenManager;
 import lombok.RequiredArgsConstructor;
 
-import lombok.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +22,8 @@ import static com.busecnky.constants.RestEndPoints.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final JwtTokenManager jwtTokenManager;
+
     @PostMapping(REGISTER)
     public ResponseEntity<RegisterResponseDto> register(@RequestBody @Valid RegisterRequestDto dto){
 
@@ -51,4 +52,16 @@ public class AuthController {
         return ResponseEntity.ok(authService.updateByUsernaemOrEmail(dto));
 
     }
+
+    @GetMapping("/getRoLeFromToken")
+    public ResponseEntity<String> getRoleFromToken(String token) {
+    return ResponseEntity.ok(jwtTokenManager.getRoleFromToken(token).get());
+
+    }
+
+    @GetMapping("/getIdFromToken")
+    public ResponseEntity<Long> getIdFromToken(String token) {
+        return ResponseEntity.ok(jwtTokenManager.getIdFromToken(token).get());
+    }
+
 }

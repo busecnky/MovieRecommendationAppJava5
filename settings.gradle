@@ -1,4 +1,6 @@
 rootProject.name = 'MovieRecommendationAppJava5'
 include 'AuthMicroService'
 include 'UserMicroService'
+include 'ConfigServer'
+include 'ConfigServerGit'
 

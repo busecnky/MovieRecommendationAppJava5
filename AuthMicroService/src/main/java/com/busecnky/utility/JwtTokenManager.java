@@ -6,10 +6,12 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.busecnky.repository.enums.ERole;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
 import java.util.Date;
 import java.util.Optional;
-
+@Service
 public class JwtTokenManager {
     @Value("${SECRETKEY}")
     String secretKey;
