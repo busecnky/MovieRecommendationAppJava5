@@ -3,6 +3,7 @@ package com.busecnky.mapper;
 import com.busecnky.dto.request.NewCreateUserRequestDto;
 import com.busecnky.dto.request.UpdateByEmailOrUserNameRequestDto;
 import com.busecnky.dto.request.UpdateRequestDto;
+import com.busecnky.rabbitmq.model.NewCreateUserRequestModel;
 import com.busecnky.repository.entity.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -20,4 +21,6 @@ public interface IUserMapper {
     UpdateByEmailOrUserNameRequestDto toUpdateByEmailOrUserNameRequestDto(final UpdateRequestDto dto);
 
     UserProfile toUserProfile(final UpdateRequestDto dto);
+
+    NewCreateUserRequestDto toNewCreateUserRequestDto(final NewCreateUserRequestModel model);
 }

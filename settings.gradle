@@ -3,4 +3,5 @@ include 'AuthMicroService'
 include 'UserMicroService'
 include 'ConfigServer'
 include 'ConfigServerGit'
+include 'ApiGatewayService'
 

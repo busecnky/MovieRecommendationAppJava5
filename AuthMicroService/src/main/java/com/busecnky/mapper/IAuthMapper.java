@@ -5,6 +5,7 @@ import com.busecnky.dto.request.RegisterRequestDto;
 import com.busecnky.dto.request.UpdateByEmailOrUserNameRequestDto;
 import com.busecnky.dto.response.LoginResponseDto;
 import com.busecnky.dto.response.RegisterResponseDto;
+import com.busecnky.rabbitmq.model.NewCreateUserRequestModel;
 import com.busecnky.repository.entity.Auth;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -27,4 +28,5 @@ public interface IAuthMapper {
 
     Auth  toAuth(final UpdateByEmailOrUserNameRequestDto dto);
 
+    NewCreateUserRequestModel toNewCreateUserRequestModel(final Auth auth);
 }

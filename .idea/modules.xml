@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApiGatewayService/MovieRecommendationAppJava5.ApiGatewayService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ApiGatewayService/MovieRecommendationAppJava5.ApiGatewayService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AuthMicroService/MovieRecommendationAppJava5.AuthMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/AuthMicroService/MovieRecommendationAppJava5.AuthMicroService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServer/MovieRecommendationAppJava5.ConfigServer.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServer/MovieRecommendationAppJava5.ConfigServer.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ConfigServerGit/MovieRecommendationAppJava5.ConfigServerGit.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ConfigServerGit/MovieRecommendationAppJava5.ConfigServerGit.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/UserMicroService/MovieRecommendationAppJava5.UserMicroService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/UserMicroService/MovieRecommendationAppJava5.UserMicroService.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MovieRecommendationAppJava5.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MovieRecommendationAppJava5.main.iml" />
     </modules>
   </component>
 </project>

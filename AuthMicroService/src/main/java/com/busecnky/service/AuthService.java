@@ -9,6 +9,7 @@ import com.busecnky.exception.AuthManagerException;
 import com.busecnky.exception.EErrorType;
 import com.busecnky.manager.IUserManager;
 import com.busecnky.mapper.IAuthMapper;
+import com.busecnky.rabbitmq.producer.RegisterUserProducer;
 import com.busecnky.repository.IAuthRepository;
 import com.busecnky.repository.entity.Auth;
 import com.busecnky.repository.enums.EStatus;
@@ -25,11 +26,13 @@ public class AuthService extends ServiceManager<Auth,Long> {
     private final IAuthRepository authRepository;
     private final IUserManager userManager;
     private final JwtTokenManager jwtTokenManager;
-    public AuthService(IAuthRepository authRepository, IUserManager userManager, JwtTokenManager jwtTokenManager) {
+    private final RegisterUserProducer userProducer;
+    public AuthService(IAuthRepository authRepository, IUserManager userManager, JwtTokenManager jwtTokenManager, RegisterUserProducer userProducer) {
         super(authRepository);
         this.authRepository = authRepository;
         this.userManager = userManager;
         this.jwtTokenManager = jwtTokenManager;
+        this.userProducer = userProducer;
     }
 
     @Transactional
@@ -39,6 +42,22 @@ public class AuthService extends ServiceManager<Auth,Long> {
             auth.setActivationCode(CodeGenerator.generateCode());
             save(auth);
             userManager.createUser(IAuthMapper.INSTANCE.toNewCreateUserRequestDto(auth));
+            return IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
+        }catch (Exception e){
+
+            throw new AuthManagerException(EErrorType.USER_NOT_CREATED);
+        }
+    }
+
+    @Transactional
+    public RegisterResponseDto registerWithRabbitMq(RegisterRequestDto dto) {
+        try {
+            Auth auth= IAuthMapper.INSTANCE.toAuth(dto);
+            auth.setActivationCode(CodeGenerator.generateCode());
+            save(auth);
+            //rabbitmq ile haberleşme sağlayacak
+            userProducer.sendNewUser(IAuthMapper.INSTANCE.toNewCreateUserRequestModel(auth));
+
             return IAuthMapper.INSTANCE.toRegisterResponseDto(auth);
         }catch (Exception e){
 
